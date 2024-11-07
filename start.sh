@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -ex
+
 # Check if GITHUB_USERNAME is set and contains only valid characters
 if [ -z "${GITHUB_USERNAME:-}" ]; then
     echo "Error: GITHUB_USERNAME environment variable is not set or is empty."
@@ -45,7 +47,7 @@ if ! command -v sshd >/dev/null 2>&1; then
 fi
 
 # Generate SSH host keys if they are not present
-if [ ! -f /etc/ssh/ssh_host_rsa_key ]; then
+if [ ! -f /etc/ssh/ssh_host_ed25519_key ]; then
     echo "Generating SSH host keys..."
     ssh-keygen -A
 fi
