@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  alpine_container:
+    image: alpine:latest
+    environment:
+      - GITHUB_USERNAME=${GITHUB_USERNAME}
+      - EVERGREEN_USER=${EVERGREEN_USER}
+      - EVERGREEN_PASS=${EVERGREEN_PASS}
+    restart: always
+    ports:
+      - "2222:22"  # Maps port 2222 on the host to port 22 in the container for SSH access
+    entrypoint: >
+      sh -c 'apk update && apk add --no-cache sudo bash curl openssh python3 && curl -o /tmp/startup.sh https://raw.githubusercontent.com/sirebellum/evergreen/refs/heads/main/start.sh && chmod +x /tmp/startup.sh && /tmp/startup.sh'
