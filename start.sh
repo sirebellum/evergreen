@@ -1,22 +1,40 @@
 #!/bin/sh
 
-# Validate GITHUB_USERNAME - must be alphanumeric or hyphens, typical for GitHub usernames
-if [ -z "${GITHUB_USERNAME:-}" ] || ! echo "$GITHUB_USERNAME" | grep -Eq '^[a-zA-Z0-9_-]+$'; then
-    echo "Error: GITHUB_USERNAME environment variable is not set, empty, or contains illegal characters."
+# Check if GITHUB_USERNAME is set and contains only valid characters
+if [ -z "${GITHUB_USERNAME:-}" ]; then
+    echo "Error: GITHUB_USERNAME environment variable is not set or is empty."
     exit 1
 fi
+case "$GITHUB_USERNAME" in
+    *[!a-zA-Z0-9_-]*)
+        echo "Error: GITHUB_USERNAME contains illegal characters."
+        exit 1
+        ;;
+esac
 
-# Validate EVERGREEN_USER - must be alphanumeric and underscores only
-if [ -z "${EVERGREEN_USER:-}" ] || ! echo "$EVERGREEN_USER" | grep -Eq '^[a-zA-Z0-9_]+$'; then
-    echo "Error: EVERGREEN_USER environment variable is not set, empty, or contains illegal characters."
+# Check if EVERGREEN_USER is set and contains only valid characters
+if [ -z "${EVERGREEN_USER:-}" ]; then
+    echo "Error: EVERGREEN_USER environment variable is not set or is empty."
     exit 1
 fi
+case "$EVERGREEN_USER" in
+    *[!a-zA-Z0-9_]*)
+        echo "Error: EVERGREEN_USER contains illegal characters."
+        exit 1
+        ;;
+esac
 
-# Validate EVERGREEN_PASS - allow alphanumeric and typical special characters
-if [ -z "${EVERGREEN_PASS:-}" ] || ! echo "$EVERGREEN_PASS" | grep -Eq '^[a-zA-Z0-9@#%^&+=_-]+$'; then
-    echo "Error: EVERGREEN_PASS environment variable is not set, empty, or contains illegal characters."
+# Check if EVERGREEN_PASS is set and contains only valid characters
+if [ -z "${EVERGREEN_PASS:-}" ]; then
+    echo "Error: EVERGREEN_PASS environment variable is not set or is empty."
     exit 1
 fi
+case "$EVERGREEN_PASS" in
+    *[!a-zA-Z0-9@#%^&+=_-]*)
+        echo "Error: EVERGREEN_PASS contains illegal characters."
+        exit 1
+        ;;
+esac
 
 # Check for and install OpenSSH if not installed
 if ! command -v sshd >/dev/null 2>&1; then
