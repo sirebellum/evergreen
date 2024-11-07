@@ -15,7 +15,7 @@ if [[ -z "${EVERGREEN_USER:-}" || ! "$EVERGREEN_USER" =~ ^[a-zA-Z0-9_]+$ ]]; the
 fi
 
 # Validate EVERGREEN_PASS - allow alphanumeric and typical special characters, adjust as needed
-if [[ -z "${EVERGREEN_PASS:-}" || ! "$EVERGREEN_PASS" =~ ^[a-zA-Z0-9@#%^\\&+=_-]+$ ]]; then
+if [[ -z "${EVERGREEN_PASS:-}" || ! "$EVERGREEN_PASS" =~ ^[a-zA-Z0-9@#%^+=_-]+$ ]]; then
     echo "Error: EVERGREEN_PASS environment variable is not set, empty, or contains illegal characters."
     exit 1
 fi
