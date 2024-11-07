@@ -1,5 +1,21 @@
 #!/bin/bash
 
+# Check if necessary environment variables are set
+if [[ -z "$GITHUB_USERNAME" ]]; then
+    echo "Error: GITHUB_USERNAME environment variable is not set."
+    exit 1
+fi
+
+if [[ -z "$EVERGREEN_USER" ]]; then
+    echo "Error: EVERGREEN_USER environment variable is not set."
+    exit 1
+fi
+
+if [[ -z "$EVERGREEN_PASS" ]]; then
+    echo "Error: EVERGREEN_PASS environment variable is not set."
+    exit 1
+fi
+
 # Check for and install openssh if not installed
 if ! command -v sshd >/dev/null 2>&1; then
     echo "Installing OpenSSH server..."
