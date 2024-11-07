@@ -59,11 +59,5 @@ if [ ! -f "${AUTHORIZED_KEYS_PATH}" ]; then
     chmod 600 "${AUTHORIZED_KEYS_PATH}"
 fi
 
-# Install Python 3 if not installed
-if ! command -v python3 >/dev/null 2>&1; then
-    echo "Installing Python 3..."
-    apk add --no-cache python3
-fi
-
 echo "Setup complete. Container is ready."
 exec "$@"
