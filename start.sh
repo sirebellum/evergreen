@@ -30,7 +30,7 @@ if [ -z "${EVERGREEN_PASS:-}" ]; then
     exit 1
 fi
 case "$EVERGREEN_PASS" in
-    *[!a-zA-Z0-9@#%^&+=_-]*)
+    *[!a-zA-Z0-9@#%^+=_-]*)
         echo "Error: EVERGREEN_PASS contains illegal characters."
         exit 1
         ;;
