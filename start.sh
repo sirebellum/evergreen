@@ -1,22 +1,24 @@
 #!/bin/bash
 
-# Check if necessary environment variables are set and non-empty
-if [[ -z "${GITHUB_USERNAME:-}" ]]; then
-    echo "Error: GITHUB_USERNAME environment variable is not set or is empty."
+# Validate GITHUB_USERNAME - must be alphanumeric or hyphens, typical for GitHub usernames
+if [[ -z "${GITHUB_USERNAME:-}" || ! "$GITHUB_USERNAME" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+    echo "Error: GITHUB_USERNAME environment variable is not set, empty, or contains illegal characters."
     exit 1
 fi
 
-if [[ -z "${EVERGREEN_USER:-}" ]]; then
-    echo "Error: EVERGREEN_USER environment variable is not set or is empty."
+# Validate EVERGREEN_USER - must be alphanumeric and underscores only (adjust regex as needed)
+if [[ -z "${EVERGREEN_USER:-}" || ! "$EVERGREEN_USER" =~ ^[a-zA-Z0-9_]+$ ]]; then
+    echo "Error: EVERGREEN_USER environment variable is not set, empty, or contains illegal characters."
     exit 1
 fi
 
-if [[ -z "${EVERGREEN_PASS:-}" ]]; then
-    echo "Error: EVERGREEN_PASS environment variable is not set or is empty."
+# Validate EVERGREEN_PASS - allow alphanumeric and typical special characters, adjust as needed
+if [[ -z "${EVERGREEN_PASS:-}" || ! "$EVERGREEN_PASS" =~ ^[a-zA-Z0-9@#%^&+=_-]+$ ]]; then
+    echo "Error: EVERGREEN_PASS environment variable is not set, empty, or contains illegal characters."
     exit 1
 fi
 
-# Check for and install openssh if not installed
+# Check for and install OpenSSH if not installed
 if ! command -v sshd >/dev/null 2>&1; then
     echo "Installing OpenSSH server..."
     apk add --no-cache openssh
