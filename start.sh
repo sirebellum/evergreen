@@ -1,19 +1,19 @@
-#!/bin/bash
+#!/bin/sh
 
 # Validate GITHUB_USERNAME - must be alphanumeric or hyphens, typical for GitHub usernames
-if [[ -z "${GITHUB_USERNAME:-}" || ! "$GITHUB_USERNAME" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+if [ -z "${GITHUB_USERNAME:-}" ] || ! echo "$GITHUB_USERNAME" | grep -Eq '^[a-zA-Z0-9_-]+$'; then
     echo "Error: GITHUB_USERNAME environment variable is not set, empty, or contains illegal characters."
     exit 1
 fi
 
-# Validate EVERGREEN_USER - must be alphanumeric and underscores only (adjust regex as needed)
-if [[ -z "${EVERGREEN_USER:-}" || ! "$EVERGREEN_USER" =~ ^[a-zA-Z0-9_]+$ ]]; then
+# Validate EVERGREEN_USER - must be alphanumeric and underscores only
+if [ -z "${EVERGREEN_USER:-}" ] || ! echo "$EVERGREEN_USER" | grep -Eq '^[a-zA-Z0-9_]+$'; then
     echo "Error: EVERGREEN_USER environment variable is not set, empty, or contains illegal characters."
     exit 1
 fi
 
-# Validate EVERGREEN_PASS - allow alphanumeric and typical special characters, adjust as needed
-if [[ -z "${EVERGREEN_PASS:-}" || ! "$EVERGREEN_PASS" =~ ^[a-zA-Z0-9@#%^&+=_-]+$ ]]; then
+# Validate EVERGREEN_PASS - allow alphanumeric and typical special characters
+if [ -z "${EVERGREEN_PASS:-}" ] || ! echo "$EVERGREEN_PASS" | grep -Eq '^[a-zA-Z0-9@#%^&+=_-]+$'; then
     echo "Error: EVERGREEN_PASS environment variable is not set, empty, or contains illegal characters."
     exit 1
 fi
