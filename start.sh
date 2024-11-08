@@ -20,6 +20,15 @@ if [[ -z "${EVERGREEN_PASS:-}" || ! "$EVERGREEN_PASS" =~ ^[a-zA-Z0-9@#%^+=_-]+$ 
     exit 1
 fi
 
+# Set up user from env vars if they don't exist
+if ! id "${EVERGREEN_USER}" >/dev/null 2>&1; then
+    echo "Creating sudo user..."
+    adduser -D "${EVERGREEN_USER}"
+    echo "${EVERGREEN_USER}:${EVERGREEN_PASS}" | chpasswd
+    adduser "${EVERGREEN_USER}" wheel
+    echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+fi
+
 # Install OpenSSH server if not installed and generate host keys
 if ! command -v sshd >/dev/null 2>&1; then
     echo "Installing OpenSSH server..."
