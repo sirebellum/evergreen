@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /etc/sftp/evergreen.env
+
 # Validate GITHUB_USERNAME - must be alphanumeric or hyphens, typical for GitHub usernames
 if [[ -z "${GITHUB_USERNAME:-}" || ! "$GITHUB_USERNAME" =~ ^[a-zA-Z0-9_-]+$ ]]; then
     echo "Error: GITHUB_USERNAME environment variable is not set, empty, or contains illegal characters."
